@@ -71,22 +71,44 @@ coord_var_defs = {
             'axis': 'Y',
         },
     ),
+    'depth': CoordVarDef(
+        dtype=DataType(name='float64', precision=3, dtype_encoded='uint32', offset=-0.001, fillvalue=0),
+        attrs={
+            'long_name': 'depth below surface',
+            'units': 'm',
+            'standard_name': 'depth',
+            'positive': 'down',
+            'axis': 'Z',
+        },
+    ),
+    'pressure': CoordVarDef(
+        dtype=DataType(name='float64', precision=1, dtype_encoded='uint32', offset=-1, fillvalue=0),
+        attrs={
+            'long_name': 'pressure',
+            'units': 'Pa',
+            'standard_name': 'air_pressure',
+            'axis': 'Z',
+        },
+    ),
     'point': CoordVarDef(
         dtype=DataType(name='point', precision=5),
         attrs={
             'long_name': 'location geometry as points',
+            'axis': 'XY',
         },
     ),
     'line': CoordVarDef(
         dtype=DataType(name='line', precision=5),
         attrs={
             'long_name': 'location geometry as lines',
+            'axis': 'XY',
         },
     ),
     'polygon': CoordVarDef(
         dtype=DataType(name='polygon', precision=5),
         attrs={
             'long_name': 'location geometry as polygons',
+            'axis': 'XY',
         },
     ),
 }

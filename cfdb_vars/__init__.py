@@ -4,7 +4,7 @@ from cfdb_vars.coord_vars import coord_var_defs
 from cfdb_vars.data_vars import data_var_defs
 from cfdb_vars.time_dtype_params import time_dtype_params as time_dtype_params
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 var_defs = {**coord_var_defs, **data_var_defs}
 
@@ -49,4 +49,13 @@ short_name_map = {
     'potential_temperature': 'potential_temperature',
     'equivalent_potential_temperature': 'equivalent_potential_temperature',
     'land_use_modis': 'land_use_modis',
+    'geopotential_height': 'geopotential_height',
+    'land_sea_mask': 'land_sea_mask',
+    'sea_ice': 'sea_ice',
+    'sea_surface_temp': 'sea_surface_temp',
+    'snow_water_equiv': 'snow_water_equiv',
+    'soil_moisture': 'soil_moisture',
+    'soil_layer_temp': 'soil_layer_temp',
+    'depth': 'depth',
+    'pressure': 'pressure',
 }

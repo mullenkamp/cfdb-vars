@@ -7,7 +7,7 @@ from cfdb_vars.coord_vars import coord_var_defs
 
 
 def test_coord_var_count():
-    assert len(coord_var_defs) == 10
+    assert len(coord_var_defs) == 12
 
 
 def test_coord_var_types():
@@ -22,14 +22,14 @@ def test_coord_vars_have_attrs():
 
 
 def test_axis_present_where_expected():
-    axis_vars = {'longitude': 'X', 'latitude': 'Y', 'height': 'Z', 'altitude': 'Z', 'time': 'T', 'x': 'X', 'y': 'Y'}
+    axis_vars = {'longitude': 'X', 'latitude': 'Y', 'height': 'Z', 'altitude': 'Z', 'time': 'T', 'x': 'X', 'y': 'Y', 'depth': 'Z', 'pressure': 'Z'}
     for name, expected_axis in axis_vars.items():
         assert coord_var_defs[name].attrs['axis'] == expected_axis, f'{name} has wrong axis'
 
 
-def test_geometry_vars_no_axis():
+def test_geometry_vars_have_axis():
     for name in ('point', 'line', 'polygon'):
-        assert 'axis' not in coord_var_defs[name].attrs, f'{name} should not have axis'
+        assert coord_var_defs[name].attrs['axis'] == 'XY', f'{name} should have axis XY'
 
 
 def test_longitude_definition():
@@ -59,7 +59,7 @@ def test_odm2_variable_names():
     for name, expected_odm2 in odm2_vars.items():
         assert coord_var_defs[name].attrs['odm2_variable_name'] == expected_odm2
 
-    no_odm2 = ('time', 'x', 'y', 'point', 'line', 'polygon')
+    no_odm2 = ('time', 'x', 'y', 'depth', 'pressure', 'point', 'line', 'polygon')
     for name in no_odm2:
         assert 'odm2_variable_name' not in coord_var_defs[name].attrs, f'{name} should not have odm2_variable_name'
 

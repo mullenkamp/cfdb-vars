@@ -242,6 +242,62 @@ data_var_defs = {
             'standard_name': 'equivalent_potential_temperature',
         },
     ),
+    'geopotential_height': DataVarDef(
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-1, fillvalue=0),
+        attrs={
+            'long_name': 'geopotential height',
+            'units': 'm',
+            'standard_name': 'geopotential_height',
+        },
+    ),
+    'land_sea_mask': DataVarDef(
+        dtype=DataType(name='uint8'),
+        attrs={
+            'long_name': 'land sea mask',
+            'units': '1',
+            'standard_name': 'land_binary_mask',
+        },
+    ),
+    'sea_ice': DataVarDef(
+        dtype=DataType(name='float32', precision=3, dtype_encoded='uint16', offset=-0.001, fillvalue=0),
+        attrs={
+            'long_name': 'sea ice area fraction',
+            'units': '1',
+            'standard_name': 'sea_ice_area_fraction',
+        },
+    ),
+    'sea_surface_temp': DataVarDef(
+        dtype=DataType(name='float32', precision=2, dtype_encoded='uint16', offset=-61, fillvalue=0),
+        attrs={
+            'long_name': 'sea surface temperature',
+            'units': 'K',
+            'standard_name': 'sea_surface_temperature',
+        },
+    ),
+    'snow_water_equiv': DataVarDef(
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint16', offset=-1, fillvalue=0),
+        attrs={
+            'long_name': 'snow water equivalent',
+            'units': 'kg m-2',
+            'standard_name': 'lwe_thickness_of_surface_snow_amount',
+        },
+    ),
+    'soil_moisture': DataVarDef(
+        dtype=DataType(name='float32', precision=3, dtype_encoded='uint16', offset=-0.001, fillvalue=0),
+        attrs={
+            'long_name': 'volumetric soil moisture',
+            'units': 'm3 m-3',
+            'standard_name': 'volume_fraction_of_condensed_water_in_soil',
+        },
+    ),
+    'soil_layer_temp': DataVarDef(
+        dtype=DataType(name='float32', precision=2, dtype_encoded='uint16', offset=-61, fillvalue=0),
+        attrs={
+            'long_name': 'soil layer temperature',
+            'units': 'K',
+            'standard_name': 'soil_temperature',
+        },
+    ),
     'land_use_modis': DataVarDef(
         dtype=DataType(name='uint8'),
         attrs={

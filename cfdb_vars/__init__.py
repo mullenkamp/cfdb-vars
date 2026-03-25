@@ -4,7 +4,7 @@ from cfdb_vars.coord_vars import coord_var_defs
 from cfdb_vars.data_vars import data_var_defs
 from cfdb_vars.time_dtype_params import time_dtype_params as time_dtype_params
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 var_defs = {**coord_var_defs, **data_var_defs}
 
@@ -58,4 +58,7 @@ short_name_map = {
     'soil_layer_temp': 'soil_layer_temp',
     'depth': 'depth',
     'pressure': 'pressure',
+    'pwat': 'pwat',
+    'vimf_u': 'vimf_u',
+    'vimf_v': 'vimf_v',
 }

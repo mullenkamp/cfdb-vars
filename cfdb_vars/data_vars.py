@@ -298,6 +298,30 @@ data_var_defs = {
             'standard_name': 'soil_temperature',
         },
     ),
+    'pwat': DataVarDef(
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint16', offset=-1, fillvalue=0),
+        attrs={
+            'long_name': 'total precipitable water',
+            'units': 'kg m-2',
+            'standard_name': 'atmosphere_mass_content_of_water_vapor',
+        },
+    ),
+    'vimf_u': DataVarDef(
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-5000.1, fillvalue=0),
+        attrs={
+            'long_name': 'eastward vertically integrated moisture flux',
+            'units': 'kg m-1 s-1',
+            'standard_name': 'eastward_atmosphere_water_transport_across_unit_distance',
+        },
+    ),
+    'vimf_v': DataVarDef(
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-5000.1, fillvalue=0),
+        attrs={
+            'long_name': 'northward vertically integrated moisture flux',
+            'units': 'kg m-1 s-1',
+            'standard_name': 'northward_atmosphere_water_transport_across_unit_distance',
+        },
+    ),
     'land_use_modis': DataVarDef(
         dtype=DataType(name='uint8'),
         attrs={

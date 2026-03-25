@@ -7,7 +7,7 @@ from cfdb_vars.data_vars import data_var_defs
 
 
 def test_data_var_count():
-    assert len(data_var_defs) == 37
+    assert len(data_var_defs) == 40
 
 
 def test_data_var_types():
@@ -92,6 +92,9 @@ def test_odm2_variable_names():
         'snow_water_equiv',
         'soil_moisture',
         'soil_layer_temp',
+        'pwat',
+        'vimf_u',
+        'vimf_v',
     )
     for name in no_odm2:
         assert 'odm2_variable_name' not in data_var_defs[name].attrs, f'{name} should not have odm2_variable_name'

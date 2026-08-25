@@ -53,6 +53,44 @@ coord_var_defs = {
             'axis': 'T',
         },
     ),
+    # --- forecast axes -------------------------------------------------------------------
+    # These two are the (init, lead) pair used by the ts_forecast / grid_forecast dataset types.
+    #
+    # WARNING -- the axis attrs below are load-bearing, not decoration. cfdb derives a
+    # coordinate's internal Axis from the CF 'axis' attr here (utils.get_var_params), and it
+    # REFUSES two coordinates sharing an axis. So forecast_reference_time takes 'T' and
+    # forecast_period deliberately has NO axis attr: CF defines only X/Y/Z/T, and a lead-time
+    # dimension is none of them.
+    'forecast_reference_time': CoordVarDef(
+        dtype=DataType(name='datetime64[m]', dtype_encoded='int32', offset=-36816481),
+        attrs={
+            'long_name': 'forecast reference time',
+            'standard_name': 'forecast_reference_time',
+            'axis': 'T',
+        },
+    ),
+    # WARNING -- 'units' is REQUIRED, load-bearing, and DELIBERATELY NOT DEFAULTED HERE.
+    #
+    # cfdb has no timedelta dtype, so lead is a bare integer; adding a bare integer to a
+    # datetime64 evaluates in the DATETIME's unit, so `last(forecast_reference_time) +
+    # max(forecast_period)` silently adds MINUTES against the datetime64[m] above. Every
+    # consumer doing init+lead arithmetic must read this attr and build an explicit
+    # np.timedelta64.
+    #
+    # An earlier cut defaulted it to 'h'. Both arms of a code review independently called that
+    # a trap, and they were right: a producer of 15-minute leads who simply forgot would have
+    # been silently labelled hourly -- a valid-time range 4x too long -- AND the default made
+    # the downstream "units must be declared" check unreachable, because the attr was never
+    # absent. Omitting it turns a silent error into a loud refusal at validation time.
+    #
+    # Set it explicitly: ds['forecast_period'].attrs['units'] = 'h'  (or 'min', 's', 'days').
+    'forecast_period': CoordVarDef(
+        dtype=DataType(name='int32'),
+        attrs={
+            'long_name': 'forecast period',
+            'standard_name': 'forecast_period',
+        },
+    ),
     'x': CoordVarDef(
         dtype=DataType(name='float32', precision=1),
         attrs={

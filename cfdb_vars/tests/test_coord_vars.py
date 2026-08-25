@@ -7,7 +7,7 @@ from cfdb_vars.coord_vars import coord_var_defs
 
 
 def test_coord_var_count():
-    assert len(coord_var_defs) == 12
+    assert len(coord_var_defs) == 14
 
 
 def test_coord_var_types():
@@ -22,7 +22,7 @@ def test_coord_vars_have_attrs():
 
 
 def test_axis_present_where_expected():
-    axis_vars = {'longitude': 'X', 'latitude': 'Y', 'height': 'Z', 'altitude': 'Z', 'time': 'T', 'x': 'X', 'y': 'Y', 'depth': 'Z', 'pressure': 'Z'}
+    axis_vars = {'longitude': 'X', 'latitude': 'Y', 'height': 'Z', 'altitude': 'Z', 'time': 'T', 'x': 'X', 'y': 'Y', 'depth': 'Z', 'pressure': 'Z', 'forecast_reference_time': 'T'}
     for name, expected_axis in axis_vars.items():
         assert coord_var_defs[name].attrs['axis'] == expected_axis, f'{name} has wrong axis'
 
@@ -59,7 +59,7 @@ def test_odm2_variable_names():
     for name, expected_odm2 in odm2_vars.items():
         assert coord_var_defs[name].attrs['odm2_variable_name'] == expected_odm2
 
-    no_odm2 = ('time', 'x', 'y', 'depth', 'pressure', 'point', 'line', 'polygon')
+    no_odm2 = ('time', 'x', 'y', 'depth', 'pressure', 'point', 'line', 'polygon', 'forecast_reference_time', 'forecast_period')
     for name in no_odm2:
         assert 'odm2_variable_name' not in coord_var_defs[name].attrs, f'{name} should not have odm2_variable_name'
 
@@ -69,3 +69,35 @@ def test_msgspec_roundtrip():
         encoded = msgspec.json.encode(var_def)
         decoded = msgspec.json.decode(encoded, type=CoordVarDef)
         assert decoded == var_def, f'{name} roundtrip failed'
+
+
+def test_forecast_reference_time_definition():
+    frt = coord_var_defs['forecast_reference_time']
+    assert frt.dtype.name == 'datetime64[m]'
+    assert frt.dtype.dtype_encoded == 'int32'
+    assert frt.dtype.offset == -36816481
+    assert frt.attrs['standard_name'] == 'forecast_reference_time'
+    assert frt.attrs['axis'] == 'T'
+
+
+def test_forecast_period_has_NO_axis():
+    """
+    Load-bearing, not an omission. cfdb derives a coordinate's internal Axis from this attr and
+    REFUSES two coordinates sharing one -- so if forecast_period grew an axis it would collide
+    with forecast_reference_time's 'T' and the forecast dataset types could not be created at
+    all. CF also defines only X/Y/Z/T, none of which a lead-time dimension is.
+    """
+    fp = coord_var_defs['forecast_period']
+    assert 'axis' not in fp.attrs
+    assert fp.dtype.name == 'int32'
+    assert fp.attrs['standard_name'] == 'forecast_period'
+
+
+def test_forecast_period_does_NOT_default_units():
+    """
+    Also deliberate. cfdb has no timedelta dtype, so a lead is a bare integer and a default unit
+    would be silently wrong for any producer whose leads are not hourly -- and would make the
+    downstream "units must be declared" check unreachable, because the attr would never be
+    absent. Absent-by-default turns a silent 60x error into a loud refusal at validation.
+    """
+    assert 'units' not in coord_var_defs['forecast_period'].attrs

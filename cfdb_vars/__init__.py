@@ -4,7 +4,7 @@ from cfdb_vars.coord_vars import coord_var_defs
 from cfdb_vars.data_vars import data_var_defs
 from cfdb_vars.time_dtype_params import time_dtype_params as time_dtype_params
 
-__version__ = '0.2.3'
+__version__ = '0.2.4'
 
 var_defs = {**coord_var_defs, **data_var_defs}
 
@@ -27,6 +27,7 @@ short_name_map = {
     'precip': 'precipitation',
     'air_temp': 'air_temperature',
     'wind_speed': 'wind_speed',
+    'wind_gust': 'wind_gust',
     'wind_direction': 'wind_direction',
     'u_wind': 'u_wind',
     'v_wind': 'v_wind',

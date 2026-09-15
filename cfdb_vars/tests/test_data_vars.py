@@ -7,7 +7,7 @@ from cfdb_vars.data_vars import data_var_defs
 
 
 def test_data_var_count():
-    assert len(data_var_defs) == 94
+    assert len(data_var_defs) == 95
 
 
 def test_data_var_types():
@@ -46,6 +46,23 @@ def test_air_temperature_definition():
     assert air_temp.attrs['units'] == 'K'
     assert air_temp.attrs['standard_name'] == 'air_temperature'
     assert 'odm2_variable_name' not in air_temp.attrs
+
+
+def test_relative_humidity_is_a_fine_fraction():
+    rh = data_var_defs['relative_humidity']
+    assert rh.attrs['units'] == '1'
+    assert rh.dtype.precision == 3 and rh.dtype.offset == -0.001
+
+
+def test_height_floors_allow_below_sea_level():
+    for name in ('terrain_height', 'geopotential_height'):
+        d = data_var_defs[name].dtype
+        assert d.dtype_encoded == 'uint32' and d.offset == -1001, name
+
+
+def test_wind_gust_definition():
+    g = data_var_defs['wind_gust']
+    assert g.attrs['standard_name'] == 'wind_speed_of_gust' and g.attrs['units'] == 'm/s'
 
 
 def test_odm2_variable_names():

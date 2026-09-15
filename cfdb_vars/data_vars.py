@@ -50,6 +50,14 @@ data_var_defs = {
             'odm2_variable_name': 'windSpeed',
         },
     ),
+    'wind_gust': DataVarDef(
+        dtype=DataType(name='float32', precision=2, dtype_encoded='uint16', offset=-1, fillvalue=0),
+        attrs={
+            'long_name': 'wind speed of gust',
+            'units': 'm/s',
+            'standard_name': 'wind_speed_of_gust',
+        },
+    ),
     'wind_direction': DataVarDef(
         dtype=DataType(name='float32', precision=1, dtype_encoded='uint16', offset=-1, fillvalue=0),
         attrs={
@@ -76,10 +84,11 @@ data_var_defs = {
         },
     ),
     'relative_humidity': DataVarDef(
-        dtype=DataType(name='float32', precision=1, dtype_encoded='uint16', offset=-1, fillvalue=0),
+        # a 0-1 FRACTION; precision 3 (0.1 %) -- precision 1 quantised a fraction to 10 % steps
+        dtype=DataType(name='float32', precision=3, dtype_encoded='uint16', offset=-0.001, fillvalue=0),
         attrs={
             'long_name': 'relative humidity',
-            'units': 'm^3/m^3',
+            'units': '1',
             'standard_name': 'relative_humidity',
             'odm2_variable_name': 'relativeHumidity',
         },
@@ -219,7 +228,9 @@ data_var_defs = {
         },
     ),
     'terrain_height': DataVarDef(
-        dtype=DataType(name='float32', precision=1, dtype_encoded='uint16', offset=-1, fillvalue=0),
+        # below-sea-level terrain (Dead Sea -430 m; model orography over some sea points is negative)
+        # and peaks above 6553 m need a floor below -1 m and more than uint16 range
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-1001, fillvalue=0),
         attrs={
             'long_name': 'terrain height above sea level',
             'units': 'm',
@@ -243,7 +254,8 @@ data_var_defs = {
         },
     ),
     'geopotential_height': DataVarDef(
-        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-1, fillvalue=0),
+        # the 1000 hPa surface sits hundreds of metres below sea level inside deep lows
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-1001, fillvalue=0),
         attrs={
             'long_name': 'geopotential height',
             'units': 'm',

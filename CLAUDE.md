@@ -44,3 +44,15 @@ uv run mkdocs serve
 - `cfdb_vars/tests/` — pytest test suite with `conftest.py` for fixtures
 - Version is read by Hatchling from `__version__` in `__init__.py`
 - Publishing: git tags trigger CI to build and publish to PyPI via `uv publish`
+
+## 0.2.5 (release note)
+
+CF standard names corrected so each exists in the CF standard name table (v94) and matches the template's
+units dimensionally: `precipitation` (mm) -> `lwe_thickness_of_precipitation_amount` (was the kg m-2
+`precipitation_amount`); `snow_water_equiv` (kg m-2) -> `surface_snow_amount`; `total_column_water` ->
+`atmosphere_mass_content_of_water`; `total_column_ozone` -> `atmosphere_mass_content_of_ozone`; `vorticity`
+-> `atmosphere_upward_relative_vorticity`; `equivalent_potential_temperature` ->
+`air_equivalent_potential_temperature`; `snow_density` -> `surface_snow_density`; `total_column_snow_water`
+-> `atmosphere_mass_content_of_snow`; `snow_water_content` -> `mass_fraction_of_snow_in_air`. Only the
+attribute of NEW variables changes; existing datasets keep theirs. Still without a CF equivalent (names not
+in the table, left as they were): `snow_albedo`, `total_column_rain_water`, `rain_water_content`.

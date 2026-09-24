@@ -29,7 +29,7 @@ data_var_defs = {
         attrs={
             'long_name': 'precipitation',
             'units': 'mm',
-            'standard_name': 'precipitation_amount',
+            'standard_name': 'lwe_thickness_of_precipitation_amount',
             'odm2_variable_name': 'precipitation',
         },
     ),
@@ -182,7 +182,7 @@ data_var_defs = {
         attrs={
             'long_name': 'relative vorticity',
             'units': 's-1',
-            'standard_name': 'atmosphere_relative_vorticity',
+            'standard_name': 'atmosphere_upward_relative_vorticity',
         },
     ),
     'vertical_velocity': DataVarDef(
@@ -250,7 +250,7 @@ data_var_defs = {
         attrs={
             'long_name': 'equivalent potential temperature',
             'units': 'K',
-            'standard_name': 'equivalent_potential_temperature',
+            'standard_name': 'air_equivalent_potential_temperature',
         },
     ),
     'geopotential_height': DataVarDef(
@@ -291,7 +291,7 @@ data_var_defs = {
         attrs={
             'long_name': 'snow water equivalent',
             'units': 'kg m-2',
-            'standard_name': 'lwe_thickness_of_surface_snow_amount',
+            'standard_name': 'surface_snow_amount',
         },
     ),
     'soil_moisture': DataVarDef(
@@ -391,7 +391,7 @@ data_var_defs = {
         attrs={
             'long_name': 'snow density',
             'units': 'kg m-3',
-            'standard_name': 'snow_density',
+            'standard_name': 'surface_snow_density',
         },
     ),
     'snow_albedo': DataVarDef(
@@ -482,7 +482,7 @@ data_var_defs = {
         attrs={
             'long_name': 'total column water',
             'units': 'kg m-2',
-            'standard_name': 'lwe_thickness_of_atmosphere_mass_content_of_water',
+            'standard_name': 'atmosphere_mass_content_of_water',
         },
     ),
     'total_column_liquid_water': DataVarDef(
@@ -514,7 +514,7 @@ data_var_defs = {
         attrs={
             'long_name': 'total column snow water',
             'units': 'kg m-2',
-            'standard_name': 'atmosphere_mass_content_of_snow_water',
+            'standard_name': 'atmosphere_mass_content_of_snow',
         },
     ),
     'total_column_ozone': DataVarDef(
@@ -522,7 +522,7 @@ data_var_defs = {
         attrs={
             'long_name': 'total column ozone',
             'units': 'kg m-2',
-            'standard_name': 'equivalent_thickness_of_atmosphere_ozone_content',
+            'standard_name': 'atmosphere_mass_content_of_ozone',
         },
     ),
 
@@ -581,7 +581,7 @@ data_var_defs = {
         attrs={
             'long_name': 'specific snow water content',
             'units': 'kg kg-1',
-            'standard_name': 'mass_fraction_of_snow_water_in_air',
+            'standard_name': 'mass_fraction_of_snow_in_air',
         },
     ),
 

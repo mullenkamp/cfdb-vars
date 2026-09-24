@@ -4,7 +4,7 @@ from cfdb_vars.coord_vars import coord_var_defs
 from cfdb_vars.data_vars import data_var_defs
 from cfdb_vars.time_dtype_params import time_dtype_params as time_dtype_params
 
-__version__ = '0.2.4'
+__version__ = '0.2.5'
 
 var_defs = {**coord_var_defs, **data_var_defs}
 

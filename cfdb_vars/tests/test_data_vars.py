@@ -34,7 +34,8 @@ def test_precipitation_definition():
     assert precip.dtype.offset == -1
     assert precip.dtype.fillvalue == 0
     assert precip.attrs['units'] == 'mm'
-    assert precip.attrs['standard_name'] == 'precipitation_amount'
+    # units are a length (mm), so the liquid-water-equivalent thickness; 'precipitation_amount' is kg m-2
+    assert precip.attrs['standard_name'] == 'lwe_thickness_of_precipitation_amount'
     assert precip.attrs['odm2_variable_name'] == 'precipitation'
 
 
@@ -176,3 +177,28 @@ def test_msgspec_roundtrip():
         encoded = msgspec.json.encode(var_def)
         decoded = msgspec.json.decode(encoded, type=DataVarDef)
         assert decoded == var_def, f'{name} roundtrip failed'
+
+
+# (template, standard_name, canonical units in the CF standard name table v94) for the templates corrected in
+# 0.2.5: each name exists in the table and its canonical units match the template's units dimensionally.
+CF_CHECKED = [
+    ('precipitation', 'lwe_thickness_of_precipitation_amount', 'm'),
+    ('snow_water_equiv', 'surface_snow_amount', 'kg m-2'),
+    ('total_column_water', 'atmosphere_mass_content_of_water', 'kg m-2'),
+    ('total_column_ozone', 'atmosphere_mass_content_of_ozone', 'kg m-2'),
+    ('vorticity', 'atmosphere_upward_relative_vorticity', 's-1'),
+    ('equivalent_potential_temperature', 'air_equivalent_potential_temperature', 'K'),
+    ('snow_density', 'surface_snow_density', 'kg m-3'),
+    ('total_column_snow_water', 'atmosphere_mass_content_of_snow', 'kg m-2'),
+    ('snow_water_content', 'mass_fraction_of_snow_in_air', '1'),
+]
+
+
+def test_cf_standard_names_corrected():
+    """A length unit needs the lwe_thickness_* name, a mass/area unit the *_amount / mass_content name."""
+    length = {'mm': 'm', 'm': 'm'}
+    for name, standard_name, canonical in CF_CHECKED:
+        attrs = data_var_defs[name].attrs
+        assert attrs['standard_name'] == standard_name, name
+        units = attrs['units']
+        assert length.get(units, units) == canonical or (units == 'kg kg-1' and canonical == '1'), (name, units)

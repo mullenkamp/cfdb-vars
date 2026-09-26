@@ -61,6 +61,17 @@ def test_height_floors_allow_below_sea_level():
         assert d.dtype_encoded == 'uint32' and d.offset == -1001, name
 
 
+def test_sensible_heat_flux_range_covers_wrf_extremes():
+    """3 km WRF sensible heat flux reached -852 / +888 W m-2 in 24 days (2026-09-27); the old -300 floor stored
+    everything below it as missing. uint16 at 0.1 W m-2 with code 0 as the fill: 65534 usable codes above it."""
+    d = data_var_defs['sensible_heat_flux'].dtype
+    assert d.dtype_encoded == 'uint16' and d.precision == 1 and d.fillvalue == 0
+    lo = 1 / 10 ** d.precision + d.offset          # code 1 (0 is the fill)
+    hi = 65535 / 10 ** d.precision + d.offset
+    assert lo <= -1500 and hi >= 1500, (lo, hi)    # the measured extremes with a margin of ~1.7x
+    assert round(lo, 1) == -2000.0 and round(hi, 1) == 4553.4
+
+
 def test_wind_gust_definition():
     g = data_var_defs['wind_gust']
     assert g.attrs['standard_name'] == 'wind_speed_of_gust' and g.attrs['units'] == 'm/s'

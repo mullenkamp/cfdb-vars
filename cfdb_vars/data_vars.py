@@ -193,10 +193,11 @@ data_var_defs = {
             'standard_name': 'upward_air_velocity',
         },
     ),
-    # -2000 .. 4553 W m-2 (uint16 at 0.1): the old -300 floor was crossed in 205 of 576 hourly frames of 3 km WRF
-    # output (min -852, max +888 over 24 days, 2026-09-27); below the floor cfdb stores the value as missing.
+    # -3000 .. 3553 W m-2 (uint16 at 0.1). Measured across all local 1-3 km WRF output (535 files, 2026-09-27):
+    # -1811 .. +1028, the extremes in a 1 km nest's first hour; the -300 floor before 0.2.6 was crossed in 205 of 576
+    # hourly frames of one 24-day 3 km run, and below the floor cfdb stores the value as missing.
     'sensible_heat_flux': DataVarDef(
-        dtype=DataType(name='float32', precision=1, dtype_encoded='uint16', offset=-2000.1, fillvalue=0),
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint16', offset=-3000.1, fillvalue=0),
         attrs={
             'long_name': 'upward sensible heat flux',
             'units': 'W m-2',

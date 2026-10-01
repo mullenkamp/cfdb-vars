@@ -39,6 +39,11 @@ def test_precipitation_definition():
     assert precip.attrs['odm2_variable_name'] == 'precipitation'
 
 
+def test_wind_direction_is_from_direction():
+    """The producer (cfdb-ingest) stores the meteorological FROM direction; the label must say so (0.2.8)."""
+    assert data_var_defs['wind_direction'].attrs['standard_name'] == 'wind_from_direction'
+
+
 def test_air_temperature_definition():
     air_temp = data_var_defs['air_temperature']
     assert air_temp.dtype.name == 'float32'

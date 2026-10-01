@@ -61,9 +61,11 @@ data_var_defs = {
     'wind_direction': DataVarDef(
         dtype=DataType(name='float32', precision=1, dtype_encoded='uint16', offset=-1, fillvalue=0),
         attrs={
-            'long_name': 'wind direction',
+            'long_name': 'wind direction (the direction the wind blows FROM)',
             'units': 'deg',
-            'standard_name': 'wind_to_direction',
+            # cfdb-ingest stores the meteorological FROM direction, (270 - atan2(v, u)) % 360 (0.2.8; was
+            # 'wind_to_direction', 180 deg the wrong way round).
+            'standard_name': 'wind_from_direction',
             'odm2_variable_name': 'windDirection',
         },
     ),

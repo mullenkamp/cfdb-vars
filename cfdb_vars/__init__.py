@@ -4,7 +4,7 @@ from cfdb_vars.coord_vars import coord_var_defs
 from cfdb_vars.data_vars import data_var_defs
 from cfdb_vars.time_dtype_params import time_dtype_params as time_dtype_params
 
-__version__ = '0.2.8'
+__version__ = '0.2.9'
 
 var_defs = {**coord_var_defs, **data_var_defs}
 
@@ -64,6 +64,11 @@ short_name_map = {
     'pwat': 'pwat',
     'vimf_u': 'vimf_u',
     'vimf_v': 'vimf_v',
+    'ivt': 'ivt',
+    'precip_tr': 'precip_tr',
+    'pwat_tr': 'pwat_tr',
+    'vimf_tr_u': 'vimf_tr_u',
+    'vimf_tr_v': 'vimf_tr_v',
     'skin_temp': 'skin_temperature',
     'snow_layer_temp': 'snow_layer_temperature',
     'ice_surface_temp': 'ice_surface_temperature',

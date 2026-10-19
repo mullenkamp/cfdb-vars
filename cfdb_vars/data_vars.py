@@ -324,7 +324,7 @@ data_var_defs = {
         },
     ),
     'vimf_u': DataVarDef(
-        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-5000.1, fillvalue=0),
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-10000.1, fillvalue=0),
         attrs={
             'long_name': 'eastward vertically integrated moisture flux',
             'units': 'kg m-1 s-1',
@@ -332,11 +332,52 @@ data_var_defs = {
         },
     ),
     'vimf_v': DataVarDef(
-        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-5000.1, fillvalue=0),
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-10000.1, fillvalue=0),
         attrs={
             'long_name': 'northward vertically integrated moisture flux',
             'units': 'kg m-1 s-1',
             'standard_name': 'northward_atmosphere_water_transport_across_unit_distance',
+        },
+    ),
+    'ivt': DataVarDef(
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-1, fillvalue=0),
+        attrs={
+            'long_name': 'integrated water vapor transport magnitude',
+            'units': 'kg m-1 s-1',
+        },
+    ),
+
+    # --- Water-vapour tracers (tagged moisture, one value per tracer region) ---
+
+    'precip_tr': DataVarDef(
+        # finer than precipitation's 0.01 mm: each value is ONE region's share of a cell's rain, so a 0.01 mm quantum
+        # zeroes small shares of real rain (8.5% of nz_land's on a measured day). 1e-4 is ~13x the float32 spacing
+        # of WRF's 0-100 mm running totals, the resolution the source increments actually have.
+        dtype=DataType(name='float32', precision=4, dtype_encoded='uint32', offset=-1, fillvalue=0),
+        attrs={
+            'long_name': 'tagged precipitation',
+            'units': 'mm',
+        },
+    ),
+    'pwat_tr': DataVarDef(
+        dtype=DataType(name='float32', precision=2, dtype_encoded='uint16', offset=-1, fillvalue=0),
+        attrs={
+            'long_name': 'tagged precipitable water',
+            'units': 'kg m-2',
+        },
+    ),
+    'vimf_tr_u': DataVarDef(
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-10000.1, fillvalue=0),
+        attrs={
+            'long_name': 'eastward vertically integrated tagged moisture flux',
+            'units': 'kg m-1 s-1',
+        },
+    ),
+    'vimf_tr_v': DataVarDef(
+        dtype=DataType(name='float32', precision=1, dtype_encoded='uint32', offset=-10000.1, fillvalue=0),
+        attrs={
+            'long_name': 'northward vertically integrated tagged moisture flux',
+            'units': 'kg m-1 s-1',
         },
     ),
     'land_use_modis': DataVarDef(
